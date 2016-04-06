@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+             http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="example-rest-provider" owner="yangyong" organization="isoftstone"/>
+    <dubbo:registry protocol="zookeeper" address="10.16.124.30:2181,10.16.124.119:2181,10.16.124.120:2181"/>
+    <dubbo:protocol id="rest8888" name="rest" port="8888" threads="500" contextpath="services" server="tomcat"
+                    accepts="500"
+                    extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
+    <dubbo:protocol id="rest9999" name="rest" port="9999" threads="500" contextpath="services" server="tomcat"
+                    accepts="500"
+                    extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
+    <dubbo:protocol id="dubbo1" name="dubbo" port="28080"/>
+    <dubbo:protocol id="dubbo2" name="dubbo" port="28081"/>
+    <bean id="userService" class="com.alibaba.example.rest.provider.UserServiceImpl"/>
+    <bean id="userRestService" class="com.alibaba.example.rest.provider.UserRestServiceImpl">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" group="userService"
+                   protocol="dubbo1"/>
+    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" group="userService"
+                   protocol="dubbo2"/>
+
+    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService" protocol="rest8888"
+                   validation="true" group="userRestService"/>
+    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService" protocol="rest9999"
+                   validation="true" group="userRestService"/>
+
+    <dubbo:provider group="userService" id="provider1" loadbalance="random" host="10.16.124.20" port="2000" cluster="forking"></dubbo:provider>
+    <dubbo:provider group="userRestService" id="provider2" loadbalance="random"  host="10.16.124.20" port="1000" cluster="forking"></dubbo:provider>
+</beans>
