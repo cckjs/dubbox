@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+             http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="example-thrift-provider" owner="yangyong" organization="isoftstone"/>
+    <dubbo:registry protocol="zookeeper" address="10.16.124.30:2181,10.16.124.119:2181,10.16.124.120:2181"/>
+    <dubbo:protocol id="thrift1" name="thrift" port="28080"/>
+
+    <bean id="userThriftService" class="com.alibaba.example.thrift.provider.UserThriftServiceProvider"/>
+
+    <dubbo:service protocol="thrift1" interface="com.alibaba.example.thrift.api.UserThriftService$Iface" ref="userThriftService"/>
+</beans>

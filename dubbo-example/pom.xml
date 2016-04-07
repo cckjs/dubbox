@@ -16,6 +16,9 @@
         <module>example-rest-provider</module>
         <module>example-rest-comsumer</module>
         <module>example-rest-api</module>
+        <module>example-thrift-api</module>
+        <module>example-thrift-provider</module>
+        <module>example-thrift-consumer</module>
     </modules>
 
     <properties>
