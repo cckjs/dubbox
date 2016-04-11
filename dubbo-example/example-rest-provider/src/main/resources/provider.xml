@@ -19,16 +19,14 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" group="userService"
-                   protocol="dubbo1"/>
-    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" group="userService"
-                   protocol="dubbo2"/>
+    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" protocol="dubbo1"/>
+    <dubbo:service provider="provider1" interface="com.alibaba.example.rest.api.UserService" ref="userService" protocol="dubbo2"/>
 
-    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService" protocol="rest8888"
-                   validation="true" group="userRestService"/>
-    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService" protocol="rest9999"
-                   validation="true" group="userRestService"/>
+    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService"
+                   protocol="rest8888" validation="true"/>
+    <dubbo:service provider="provider2" interface="com.alibaba.example.rest.api.UserRestService" ref="userRestService"
+                   protocol="rest9999" validation="true"/>
 
-    <dubbo:provider group="userService" id="provider1" loadbalance="random" host="10.16.124.20" port="2000" cluster="forking"></dubbo:provider>
-    <dubbo:provider group="userRestService" id="provider2" loadbalance="random"  host="10.16.124.20" port="1000" cluster="forking"></dubbo:provider>
+    <dubbo:provider id="provider1" loadbalance="random" group="userService" cluster="forking"></dubbo:provider>
+    <dubbo:provider id="provider2" loadbalance="random" group="userRestService" cluster="forking"></dubbo:provider>
 </beans>

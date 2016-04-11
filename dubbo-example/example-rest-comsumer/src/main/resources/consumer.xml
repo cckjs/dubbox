@@ -6,8 +6,13 @@
              http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <dubbo:application name="example-rest-consumer" owner="yangyong" organization="isoftstone"/>
     <dubbo:registry protocol="zookeeper" address="10.16.124.30:2181,10.16.124.119:2181,10.16.124.120:2181"/>
-    <dubbo:reference id="userRestService" interface="com.alibaba.example.rest.api.UserService" check="false"/>
+    <dubbo:protocol id="rest" name="rest"/>
+    <dubbo:protocol id="dubbo" name="dubbo" />
+    <dubbo:reference consumer="consumer1" id="userService" protocol="dubbo" interface="com.alibaba.example.rest.api.UserService" check="true"/>
 
-    <dubbo:reference id="userService" interface="com.alibaba.example.rest.api.UserRestService" check="false"/>
+    <dubbo:reference consumer="consumer2" id="userRestService" protocol="rest" interface="com.alibaba.example.rest.api.UserRestService" check="true"/>
+
+    <dubbo:consumer id="consumer1" group="userService"/>
+    <dubbo:consumer id="consumer2" group="userRestService"/>
 
 </beans>

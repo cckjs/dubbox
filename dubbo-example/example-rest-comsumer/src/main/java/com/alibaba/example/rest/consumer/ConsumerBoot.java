@@ -16,9 +16,9 @@ public class ConsumerBoot {
         UserEntity user = userService.getUser(100l);
         System.out.println(user.getGender());
 
-        UserRestService userRestService = context.getBean(UserRestService.class);
+        UserRestService userRestService = (UserRestService) context.getBean("userRestService1");
         UserEntity user1 = userRestService.getUser(100l);
-        System.out.println(user1.getName());
+        System.out.println(user1.getGender());
 
 
     }

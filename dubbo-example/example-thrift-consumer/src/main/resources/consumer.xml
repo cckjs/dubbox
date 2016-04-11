@@ -4,9 +4,10 @@
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
              http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-    <dubbo:application name="example-thrift-consumer" owner="yangyong" organization="isoftstone"/>
+    <dubbo:application name="example-thrift-consumer" owner="yangyong1" organization="isoftstone"/>
     <dubbo:registry protocol="zookeeper" address="10.16.124.30:2181,10.16.124.119:2181,10.16.124.120:2181"/>
-    <dubbo:protocol id="thrift1" name="thrift"/>
+    <dubbo:protocol name="thrift"/>
 
-    <dubbo:reference protocol="thrift1" id="userThriftService" interface="com.alibaba.example.thrift.api.UserThriftService$Iface" timeout="10000"/>
-    </beans>
+    <dubbo:reference protocol="thrift" id="userThriftService" interface="com.alibaba.example.thrift.api.UserThriftService$Iface"
+                     timeout="10000"/>
+</beans>
